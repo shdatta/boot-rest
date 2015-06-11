@@ -1,0 +1,11 @@
+sqls:
+ -
+  name: "AmexDuplicates"
+  sql: "select m.ACCOUNTNUMBER, count(*) from oasis_owner.merchantfinancialcard mfc, oasis_owner.merchantaccountextended me, oasis_owner.merchantaccount_enc m where mfc.CARDTYPE like 'AMEX%' and mfc.ACCOUNTSWITCH = 'TRUE' and mfc.MERCHANTACCOUNTEID = me.MERCHANTACCOUNTEID and me.PROCESSORTYPE = 'PTS' and m.eid = mfc.MERCHANTACCOUNTEID group by m.ACCOUNTNUMBER HAVING count(*) > 1"
+  reportFile: "/Users/snanjappa/MM/Reports/DuplicateAmex.txt"
+  mailBody: "Following merchant(s) have mutiple entries for Amex"
+ -
+  name: "ICPlus"
+  sql: "select distinct  ma.ACCOUNTNUMBER from oasis_owner.merchantaccountextended me, oasis_owner.merchantaccount_enc ma, oasis_owner.merchantfinancialcard mfc where me.RATEPLAN = 'IC_Tier' and PROCESSORTYPE = 'PTS' and ma.imsstatus in ('APPROVED', 'BOARDED', 'OPENED', 'REOPENED') and ma.eid = me.MERCHANTACCOUNTEID and mfc.MERCHANTACCOUNTEID = ma.eid and (mfc.NONQUALRATE >1 or mfc.QUALDISCOUNTRATE > 1 or  mfc.MIDQUALRATE > 1) and mfc.CARDTYPE in ('VISA', 'MASTERCARD', 'DISCOVER_FULL_CARD') and mfc.ACCOUNTSWITCH = 'TRUE' order by ma.ACCOUNTNUMBER"
+  reportFile: "/Users/snanjappa/MM/Reports/ICPlus.txt"
+  mailBody: "Following ICPlus merchants seem to have higher rates"
