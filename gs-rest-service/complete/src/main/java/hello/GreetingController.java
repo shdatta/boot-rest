@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -26,9 +28,12 @@ public class GreetingController {
     private DBService dbService;
 
     @RequestMapping("/greeting")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Greeting(counter.incrementAndGet(),
+    public Map<String, Greeting> greeting(@RequestParam(value="name", defaultValue="World") String name) {
+        Greeting greeting =  new Greeting(counter.incrementAndGet(),
                             String.format(template, name));
+        HashMap<String, Greeting> hashMap = new HashMap<>();
+        hashMap.put("test", greeting);
+        return hashMap;
     }
 
     @RequestMapping("/dbContents")

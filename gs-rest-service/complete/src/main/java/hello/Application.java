@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableScheduling
 @EnableJms
 @EnableAspectJAutoProxy
-@EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class })
 @EnableWebMvc
 public class Application {
 
@@ -36,4 +36,6 @@ public class Application {
 //        filter.setIncludePayload(true);
 //        return filter;
 //    }
+
+
 }
