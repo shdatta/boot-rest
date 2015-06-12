@@ -8,12 +8,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableScheduling
 @EnableJms
 @EnableAspectJAutoProxy
 @EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
+@EnableWebMvc
 public class Application {
 
 //    @Bean
@@ -27,4 +29,11 @@ public class Application {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
     }
+//
+//    @Bean
+//    public Filter hiddenHttpMethodFilter() {
+//        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+//        filter.setIncludePayload(true);
+//        return filter;
+//    }
 }

@@ -22,10 +22,11 @@ public class SystemArchitecture {
     @Pointcut("bean(dbService)")
     protected void Profile1() {}
 
-    @Pointcut("execution(* hello.RestFilter.*(..))")
-    protected void DontProfile() {}
+//    @Pointcut("execution(* hello.RestFilter.*(..))")
+//    protected void DontProfile() {}
 
-    @Around("Profile() && !DontProfile()")
+//    @Around("Profile() && !DontProfile()")
+    @Around("Profile()")
     public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
         log.info("Starting .. " + pjp.getSignature());
 
@@ -35,7 +36,8 @@ public class SystemArchitecture {
         return retVal;
     }
 
-    @AfterThrowing(pointcut="Profile() && !DontProfile()", throwing="ex")
+//    @AfterThrowing(pointcut="Profile() && !DontProfile()", throwing="ex")
+    @AfterThrowing(pointcut="Profile()", throwing="ex")
     public void LogException(Exception ex){
         log.error(ex.getMessage());
     }
